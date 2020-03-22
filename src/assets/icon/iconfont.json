@@ -1,0 +1,30 @@
+{
+  "id": "1589552",
+  "name": "etd",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "12579507",
+      "name": "star-full",
+      "font_class": "star-full",
+      "unicode": "e781",
+      "unicode_decimal": 59265
+    },
+    {
+      "icon_id": "12579508",
+      "name": "star-empty",
+      "font_class": "star-empty",
+      "unicode": "e782",
+      "unicode_decimal": 59266
+    },
+    {
+      "icon_id": "12579509",
+      "name": "star-half",
+      "font_class": "star-half",
+      "unicode": "e783",
+      "unicode_decimal": 59267
+    }
+  ]
+}

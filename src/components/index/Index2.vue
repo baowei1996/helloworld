@@ -28,6 +28,7 @@
 </template>
 <script>
 export default {
+    name:'index2',
     data(){
         return{
             hot_course:[],

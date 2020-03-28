@@ -47,16 +47,38 @@
                     </a>
                 </div>
             </div>
-            <div class="col-2" style="height: 260px;margin-top:20px;margin-right: 20px">
+            <div v-if="logined">
+                <div class="col-2" style="height: 260px;margin-top:20px;margin-right: 20px">
                 <img src="/static/image/course_img/course5.jpg" class="rounded-circle" alt="Cinque Terre"
                          style="margin-left:53px;margin-top:19px;height: 100px;width: 100px">
                 <div style="margin-left: 57px;margin-top:15px">
-                    <a href="" class="btn btn-primary">我的课程</a>
+                    <router-link to="/user" class="btn btn-primary">我的课程</router-link>
                 </div>
-                <div style="margin-left: 57px;margin-top:15px">
+                <!-- <div style="margin-left: 57px;margin-top:15px">
                     <a href="/logout/" class="btn btn-primary">登出账号</a>
+                </div> -->
+                </div>
+            </div>
+            <div v-else>
+                <div style="margin-left: 57px;margin-top:15px">
+                    <img src="../../assets/vue.png" class="rounded-circle" alt="Cinque Terre"
+                         style="margin-left:53px;margin-top:19px;height: 100px;width: 100px">
+                    <div style="margin-left: 57px;margin-top:15px">
+                        <router-link to="login" class="btn btn-primary">前往登录</router-link>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </template>
+
+<script>
+export default {
+    data(){
+        return{
+
+        }
+    },
+    props:['logined']
+}
+</script>

@@ -1,7 +1,7 @@
 <template>
     <div class="tab-pane container" id="course_list">
-                      <ul class="list-group">
-                          <li class="list-group-item" v-for="(item,key) in pages" :key="key">{{item}}</li>
+                      <ul class="list-group" v-for="(sub,index) in pages" :key="index">
+                          <li class="list-group-item" v-for="(item,key) in sub.subcourses" :key="key">{{item.title}}</li>
                         </ul>
                   </div>
 </template>

@@ -52,7 +52,7 @@ export default {
 			this.$axios.get('/course/course?courseId='+courseId)
 			.then(function(response){
 				_this.course = response.data
-				console.log(response)
+				_this.course.pages = JSON.parse(response.data.pages)
 			}).catch(function(error){
 				console.log(error)
 			})

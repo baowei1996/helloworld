@@ -20,7 +20,7 @@
                                               <div class="progress" style="height: 10px; margin-bottom: 5px;">
                                                     <div class="progress-bar bg-success" style="width:40%"></div>
                                               </div>
-                                              <a href="#" class="btn btn-primary">继续学习</a>
+                                              <router-link :to="'courseInfo/'+course.id" class="btn btn-primary">继续学习</router-link>
                                             </div>
                                     </div>
                             </div>

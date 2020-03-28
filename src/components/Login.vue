@@ -31,6 +31,7 @@
 </template>
 
 <script>
+import {setCookie,getCookie} from '../assets/js/cookie.js'
 export default{
     data(){
         return{
@@ -41,25 +42,18 @@ export default{
     },
     methods:{
         Login(){
-            var _this = this;
             if(this.checked == "student")
             {
-                this.$axios.post("/user/login/student",{
-                    "userName":_this.userName,
-                    "password":_this.password,
-                },{
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                }).then(function(response){
-                    console.log(response)
-                }).catch(function(error){
-                    console.log("用户名或密码错误")
-                })
+                this.stu_Login()
             }
             else if(this.checked == "teacher")
             {
-                this.$axios.post("/user/login/teacher",{
+                this.tea_Login()
+            }
+        },
+        stu_Login(){
+            var _this = this;
+            this.$axios.post("/user/login/student",{
                     "userName":_this.userName,
                     "password":_this.password,
                 },{
@@ -67,11 +61,39 @@ export default{
                         'Content-Type': 'application/json'
                     }
                 }).then(function(response){
+                    var success = response.data.success
+                    if(!success){
+                        alert(response.data.errMsg);
+                    }else{
+                        //TODO 保存用户信息，然后跳转首页
+                        setCookie("sessionKey",response.data.sessionKey,3600)
+                        _this.$router.push('/')
+                    }
                     console.log(response)
                 }).catch(function(error){
                     console.log("用户名或密码错误")
                 })
-            }
+        },
+        tea_Login(){
+            var _this = this;
+            this.$axios.post("/user/login/teacher",{
+                    "userName":_this.userName,
+                    "password":_this.password,
+                },{
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }).then(function(response){
+                    var success = response.data.success
+                    if(!success){
+                        alert(response.data.errMsg);
+                    }else{
+                        //TODO 保存用户信息，然后跳转管理员入口
+                    }
+                    console.log(response)
+                }).catch(function(error){
+                    console.log("用户名或密码错误")
+                })
         },
         label_Student()
         {

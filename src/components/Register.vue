@@ -4,32 +4,32 @@
             <h3 class="text-center">欢迎注册</h3>
             <div class="form-group">
                 <label for="id_username">用户名：</label>
-                <input type="text" name='username' class="form-control" id="id_username" placeholder="Username" autofocus required>
+                <input v-model="userName" type="text" name='username' class="form-control" id="id_username" placeholder="Username" autofocus required>
             </div>
             <div class="form-group">
                 <label for="id_password">密码：</label>
-                <input type="password" name='password' class="form-control" id="id_password" placeholder="Password" required>
+                <input v-model="password" type="password" name='password' class="form-control" id="id_password" placeholder="Password" required>
             </div>
             <div class="form-group">
                 <label for="id_password">确认密码：</label>
-                <input type="password" name='password' class="form-control" id="id_password" placeholder="Password" required>
+                <input v-model="pwd_sure" @blur="checkPwd" type="password" name='password' class="form-control" id="id_password" placeholder="Password" required>
             </div>
-            <label for="user_type">性别:</label>
+            <!-- <label for="user_type">性别:</label>
             <div class="btn-group" data-toggle="buttons" style="width: 370px">
                 <label  class="btn btn-info">
-                    <input  type="radio" name="options" @click="Sex_male"> 男
+                    <input  type="radio" name="sex_options" @click="Sex_male"> 男
                 </label>
                 <label  class="btn btn-info">
-                    <input  type="radio" name="options" @click="Sex_female"> 女
+                    <input  type="radio" name="sex_options" @click="Sex_female"> 女
                 </label>
-            </div>
+            </div> -->
             <label for="user_type">用户类型:</label>
             <div class="btn-group" data-toggle="buttons" style="width: 370px">
                 <label  class="btn btn-info" @click="Rlabel_student">
-                    <input  type="radio" name="options"> 学生
+                    <input  type="radio" name="role_options"> 学生
                 </label>
                 <label  class="btn btn-info" @click="Rlabel_teacher">
-                    <input  type="radio" name="options"> 教师
+                    <input  type="radio" name="role_options"> 教师
                 </label>
             </div>
 
@@ -47,15 +47,27 @@ export default{
         return{
             userName:"",
             password:"",
+            pwd_sure:"",
+            resure:""
         }
     },
     methods:{
         Register()
         {
-            var _this = this;
-            if(this.checked == "student")
+            if(this.resure && this.checked == "student")
             {
-                this.$axios.post("/user/register/student",{
+                this.stu_Reg()
+            }
+            else if(this.resure && this.checked == "teacher")
+            {
+                this.tea_Reg()
+            }else if(!this.resure){
+                alter("密码不一致，请确认")
+            }
+        },
+        stu_Reg(){
+            var _this = this;
+            this.$axios.post("/user/register/student",{
                     "userName":_this.userName,
                     "password":_this.password,
                 },{
@@ -63,14 +75,16 @@ export default{
                         'Content-Type': 'application/json'
                     }
                 }).then(function(response){
+                    //保存信息之后跳转登录
+                    _this.$router.push("/login")
                     console.log(response)
                 }).catch(function(error){
                     console.log("用户名或密码不符合规范")
                 })
-            }
-            else if(this.checked == "teacher")
-            {
-                this.$axios.post("/user/register/teacher",{
+        },
+        tea_Reg(){
+            var _this = this;
+            this.$axios.post("/user/register/teacher",{
                     "userName":_this.userName,
                     "password":_this.password,
                 },{
@@ -78,10 +92,22 @@ export default{
                         'Content-Type': 'application/json'
                     }
                 }).then(function(response){
+                    //TODO 跳转登录
+                    _this.$router.push('/login')
                     console.log(response)
                 }).catch(function(error){
                     console.log("用户名或密码不规范")
                 })
+        },
+        checkPwd(){
+            if(this.password == this.pwd_sure){
+                //TODO 调整密码输入框的样式
+                alert("密码确认")
+                this.resure = true;
+            }else{
+                //TODO 调整密码确认的输入框样式
+                alert("密码不一致")
+                this.resure = false;
             }
         },
         Rlabel_student()
